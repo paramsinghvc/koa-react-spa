@@ -2,21 +2,47 @@
   "name": "koa-react-spa",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8082",
+  "scripts": {
+    "prestart": "echo -e \"⛳️  Running Koa Client-Server Application -\\033[1m Development \\033[0m\"",
+    "start": "concurrently 'yarn run start:client' 'yarn run start:server'",
+    "prestart:prod": "echo -e \"⛳️  Running Koa Client-Server Application -\\033[1m Production \\033[0m\"",
+    "start:prod": "concurrently 'yarn run build:client' 'yarn run start:server-prod'",
+    "start:client": "react-app-rewired start",
+    "build:client": "react-app-rewired build",
+    "build": "concurrently 'yarn run build:client' 'yarn run build:server'",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "build:server": "rimraf ./server/dist && TS_NODE_PROJECT=\"./server/tsconfig.json\" webpack --config ./server/webpack.config.ts",
+    "build:server-watch": "rimraf ./server/dist && NODE_ENV=development TS_NODE_PROJECT=\"./server/tsconfig.json\" webpack --config ./server/webpack.config.ts --watch",
+    "start:server-prod": "concurrently 'yarn run build:server' 'wait-on ./server/dist/server.bundle.js && node ./server/dist/server.bundle.js'",
+    "prestart:server": "echo '📦   Bundling server & running'",
+    "start:server": "concurrently 'yarn run build:server-watch' 'wait-on ./server/dist/server.bundle.js && DEBUG=koa* NODE_DEBUG=request nodemon --inspect ./server/dist/server.bundle.js'"
+  },
   "dependencies": {
+    "@emotion/core": "^10.0.17",
+    "@emotion/styled": "^10.0.17",
     "@types/jest": "24.0.18",
-    "@types/node": "12.7.4",
+    "@types/node": "^12.7.4",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
+    "chalk": "^2.4.2",
+    "figlet": "^1.2.4",
+    "koa": "^2.8.1",
+    "koa-body": "^4.1.1",
+    "koa-cookie": "^1.0.0",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-useragent": "^2.0.0",
+    "path": "^0.12.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
-    "typescript": "3.6.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "typescript": "3.5.3",
+    "winston": "^3.2.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +58,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/webpack": "^4.39.1",
+    "@types/webpack-env": "^1.14.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.2",
+    "react-app-rewired": "^2.1.3",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "wait-on": "^3.3.0",
+    "webpack-cli": "^3.3.8",
+    "yarn": "^1.17.3"
   }
 }

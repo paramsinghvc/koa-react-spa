@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2017",
+        "baseUrl": "./",
+        // "moduleResolution": "node",
+        "esModuleInterop": true,
+        // "allowJs": true,
+        "checkJs": false,
+        "allowSyntheticDefaultImports": true
+    }
+}
