@@ -53,7 +53,7 @@ app.use(morganMiddleware);
 /** Koa Router holding all the api routes, prefixed with /api */
 app.use(apiRouter.routes());
 
-/** Rewrite Cycle or History Apu fallback for Single Page UI Applications
+/** Rewrite Cycle or History Api fallback for Single Page UI Applications
  * Works by catching the unresolved/unmatched routes and redirecting them to
  * index.html of the frontend app to get resolved through client side navigation eg: React-Router
  */
