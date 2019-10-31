@@ -1,3 +1,4 @@
+/* eslint-disable require-atomic-updates */
 /* eslint-disable no-console */
 import Koa from "koa";
 import bodyParser from "koa-body";

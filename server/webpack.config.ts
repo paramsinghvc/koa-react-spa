@@ -11,6 +11,9 @@ const config: webpack.Configuration = {
     __dirname: false,
     __filename: true
   },
+  watchOptions: {
+    ignored: ["**/*.json"]
+  },
   module: {
     rules: [
       {

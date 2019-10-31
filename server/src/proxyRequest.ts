@@ -2,10 +2,14 @@ import Koa from "koa";
 import request from "request-promise-native";
 import { StatusCodeError } from "request-promise-native/errors";
 import { CoreOptions } from "request";
+import Router from "koa-router";
 
 import { logger } from "./logger";
 
-export type KoaContext = Koa.ParameterizedContext<any, {}>;
+export type KoaContext = Koa.ParameterizedContext<
+  any,
+  Router.IRouterParamContext<any, {}>
+>;
 export type UrlResolutionFunction = (
   req: Koa.Request,
   ctx?: KoaContext
@@ -36,7 +40,7 @@ export const proxyRequest = ({
   clearSessionCookie = false
 }: ProxyRequestOptions) =>
   async function(ctx: KoaContext) {
-    const { request: req, response: res, cookies, cookie } = ctx;
+    const { request: req, response: res, cookies } = ctx;
     try {
       const resolvedUrl = isUrlResolutionFunction(url) ? url(req, ctx) : url;
       const requestOptions: CoreOptions & {
